@@ -1,5 +1,13 @@
 {
     "configurations": [
+        
+        {
+            "type": "java",
+            "name": "App",
+            "request": "launch",
+            "mainClass": "code.App",
+            "projectName": "my-app"
+        },
         {
             "type": "java",
             "name": "Launch App",
@@ -7,7 +15,7 @@
             "cwd": "${workspaceFolder}",
             "console": "internalConsole",
             "stopOnEntry": false,
-            "mainClass": "com.mycompany.app.App",
+            "mainClass": "code.App",
             "args": "",
             "projectName": "my-app"
         }

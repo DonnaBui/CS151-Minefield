@@ -1,8 +1,7 @@
-package com.mycompany.app;
-
-import org.junit.Test;
+package code;
 
 import static org.junit.Assert.assertTrue;
+import org.junit.Test;
 
 
 public class AppTest {
