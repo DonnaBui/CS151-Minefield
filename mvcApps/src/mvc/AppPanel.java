@@ -25,6 +25,30 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
         frame.setJMenuBar(createMenuBar());
         frame.setTitle(factory.getTitle());
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+
+    }
+//added set board - adam
+    public void setBoard(){
+        for (int i = 0, i < 10;i++){
+            for (int j = 0, i < 10; i++){
+                board[i][j] = new Cell();
+            }
+        }
+        MineSet();
+        nearbyMineSet();
+    }
+//addded MineSet adam
+    private void MineSet(){
+        Random rand = new Random();
+        int placedMines = 0;
+        while (placed < 10) {
+            int i = random.nextInt(10);
+            int j = random.nextInt(10);
+            if (!mines[i][j]){
+                mines[i][j] = true;
+                placedMines++;
+            }
+        }
     }
 
     public void display() { frame.setVisible(true); }
