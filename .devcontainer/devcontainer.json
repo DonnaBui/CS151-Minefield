@@ -1,0 +1,23 @@
+{
+    "name": "Java",
+    "image": "mcr.microsoft.com/devcontainers/java:1-21",
+    "features": {
+        "ghcr.io/devcontainers/features/sshd:1": {
+            "version": "latest"
+        }, 
+        "ghcr.io/devcontainers/features/java:1": {
+        "version": "none",
+        "installMaven": "false",
+        "installGradle": "false"
+        }
+    },
+    "postCreateCommand": "sudo apt-get update && sudo apt-get install -y xauth x11-apps x11-common",
+}
+  // Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "java -version",
+
+	// Uncomment to connect as root instead. More info: https://aka.ms/dev-containers-non-root.
+	// "remoteUser": "root"
