@@ -8,24 +8,20 @@ import javax.swing.*;
 
 public class Utilities {
 
-    // asks user a yes/no question
     public static boolean confirm(String query) {
         int result = JOptionPane.showConfirmDialog(null,
                 query, "choose one", JOptionPane.YES_NO_OPTION);
         return result == 0;
     }
 
-    // asks user for info
     public static String ask(String query) {
         return JOptionPane.showInputDialog(null, query);
     }
 
-    // tells user some info
     public static void inform(String info) {
         JOptionPane.showMessageDialog(null,info);
     }
 
-    // tells user a lot of info
     public static void inform(String[] items) {
         String helpString = "";
         for(int i = 0; i < items.length; i++) {
@@ -34,7 +30,6 @@ public class Utilities {
         inform(helpString);
     }
 
-    // tells user about an error
     public static void error(String gripe) {
         JOptionPane.showMessageDialog(null,
                 gripe,
@@ -42,7 +37,6 @@ public class Utilities {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    // tells user about an exception
     public static void error(Exception gripe) {
         gripe.printStackTrace();
         JOptionPane.showMessageDialog(null,
@@ -51,7 +45,6 @@ public class Utilities {
                 JOptionPane.ERROR_MESSAGE);
     }
 
-    // asks user to save changes
     public static void saveChanges(Model model) {
         if (model.getUnsavedChanges() &&
                 !Utilities.confirm("current model has unsaved changes, continue?")) {
@@ -59,12 +52,10 @@ public class Utilities {
         }
     }
 
-    // asks user for a file name
     public static String getFileName(String fName, Boolean open) {
         JFileChooser chooser = new JFileChooser();
         String result = null;
         if (fName != null) {
-            // open chooser in directory of fName
             chooser.setCurrentDirectory(new File(fName));
         }
         if (open) {
@@ -81,7 +72,6 @@ public class Utilities {
         return result;
     }
 
-    // save model
     public static void save(Model model, Boolean saveAs) {
         String fName = model.getFileName();
         if (fName == null || saveAs) {
@@ -99,7 +89,6 @@ public class Utilities {
         }
     }
 
-    // open model
     public static Model open(Model model) {
         saveChanges(model);
         String fName = getFileName(model.getFileName(), true);
@@ -114,7 +103,6 @@ public class Utilities {
         return newModel;
     }
 
-    // simple menu maker
     public static JMenu makeMenu(String name, String[] items, ActionListener handler) {
         JMenu result = new JMenu(name);
         for(int i = 0; i < items.length; i++) {
@@ -125,7 +113,6 @@ public class Utilities {
         return result;
     }
 
-    // random number generator
     public static Random rng = new Random(System.currentTimeMillis());
 
     public static void log(String msg) {
