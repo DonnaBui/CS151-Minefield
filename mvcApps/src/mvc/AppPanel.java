@@ -118,6 +118,20 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
 
     }
 
+    private class CellClickListener implements ActionListener {
+        private int i;
+        private int j;
+
+    public CellClickListener(int i, int j) {
+        this.i = i;
+        this.j = j;
+    }
+
+    public void actionPerformed(ActionEvent e) {
+        uncoverCell(i, j);
+        }
+    }
+
     public void display() { frame.setVisible(true); }
 
     public void update() {  /* override in extensions if needed */ }
