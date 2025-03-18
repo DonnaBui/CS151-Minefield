@@ -3,6 +3,7 @@ package stopLight;
 import java.awt.*;
 import javax.swing.*;
 
+import mineField.AppPanel;
 import mvc.*;
 
 public class StoplightPanel extends AppPanel {
