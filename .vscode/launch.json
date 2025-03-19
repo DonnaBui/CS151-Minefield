@@ -6,6 +6,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "MinefieldPanel",
+            "request": "launch",
+            "mainClass": "mineField.MinefieldPanel",
+            "projectName": "CS151-Minesweeper_49b3e974"
+        },
+        {
+            "type": "java",
             "name": "StoplightPanel",
             "request": "launch",
             "mainClass": "stopLight.StoplightPanel",

@@ -9,6 +9,7 @@ public class Minefield extends Model {
     private boolean[][] mines, uncovered;
     private boolean gameEnded = false;
     
+    // Some useful constructors that might come in handy
     public int getPlayerRow() {
         return playerRow;
     }
@@ -19,13 +20,13 @@ public class Minefield extends Model {
         return gridSize;
     }
 
+    public void changeSize() {} // tbd
+    
     public Minefield() {
         mines = new boolean[gridSize][gridSize];
         uncovered = new boolean[gridSize][gridSize]; 
         setMines();
     }
-
-    public void changeSize() {} // tbd
 
     private void setMines() {
         Random rand = new Random();  // in a 10x10 grid, there will be 10 mines
@@ -41,6 +42,13 @@ public class Minefield extends Model {
         }
     }
 
+    public boolean inBounds(int row, int col) {
+        if (row >= 0 && row < gridSize && col >= 0 && col < gridSize) {
+            return true;
+        }
+        return false;
+    }
+
     public int nearbyMines(int row, int col) {
         int nearbyMines = 0;
         for (int x = -1; x <= 1; x++) { 
@@ -48,10 +56,8 @@ public class Minefield extends Model {
                 int r = row + x;
                 int c = col + y;
                 // Only check the adjacent squares that are in range of the grid
-                if (r >= 0 && r < gridSize && c >= 0 && c < gridSize) {
-                    if (mines[r][c]) {
-                        nearbyMines++;
-                    }
+                if (inBounds(r,c) && mines[r][c]) {
+                    nearbyMines++;
                 }
             }
         }
@@ -73,7 +79,26 @@ public class Minefield extends Model {
         }
     }
     public void move(int rowModifier, int colModifier) {
-        changed(); // from Model, sets changed flag and fires changed event
+        int newRow = getPlayerRow() + rowModifier;
+        int newCol = getPlayerCol() + colModifier;
+        
+        if (gameEnded == true) throw new IllegalArgumentException("The game has ended. Please start a new game to continue.");
+        else if (!inBounds(newRow, newCol)) throw new IllegalArgumentException("Out of bounds! Please choose a different direction.");
+        else if (mines[newRow][newCol]) {
+            gameEnded = true;
+            throw new IllegalArgumentException("Oh no! You stepped on a mine. Game over :(");
+        }
+        else if (newRow == gridSize - 1 && newCol = gridSize - 1) {
+            gameEnded = true;
+            throw new IllegalArgumentException("You successfully reached the goal! You win :)");
+        }
+        else {
+            playerRow = newRow;
+            playerCol = newCol;
+            uncovered[playerRow][playerCol] = true;
+            changed(); // from Model, sets changed flag and fires changed event
+        }
+        
     }
 
 }
