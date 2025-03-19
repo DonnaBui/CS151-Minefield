@@ -39,7 +39,10 @@ public class MinefieldFactory implements AppFactory {
     public String getTitle() { return "Minefield Game"; }
 
     public String[] getHelp() {
-        return new String[] {"Click on the directional buttons to traverse the field."};
+        return new String[] {
+            "Click on the directional buttons to traverse the field." + 
+            "Get to the green box without stepping on any mines!"
+        };
     }
 
     public String about() {

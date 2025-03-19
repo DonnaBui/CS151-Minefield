@@ -22,18 +22,15 @@ public class MinefieldView extends View {
         this.setLayout(new GridLayout(gridSize, gridSize)); // row/column size are the same
         
         cells = new JButton[gridSize][gridSize];
-
+        // Populate grid with buttons
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
                 JButton cell = new JButton();
                 cell.setEnabled(false);
-                cell.setBackground(Color.GRAY); // Set the cell colors to gray
                 cells[i][j] = cell;
                 this.add(cell);
             }
         }
-        // Set the color of the goal to bright green
-        cells[gridSize - 1][gridSize - 1].setBackground(Color.GREEN);
     }
 
     @Override
@@ -44,7 +41,7 @@ public class MinefieldView extends View {
     }
 
     @Override
-    protected void paintComponent(Graphics g) {
+    protected void paintComponent(Graphics g) { 
         super.paintComponent(g);
         
         // Draw the player's position
@@ -53,19 +50,27 @@ public class MinefieldView extends View {
         int playerRow = mine.getPlayerRow();
         int playerCol = mine.getPlayerCol();
 
+        // Handles all coloring and visual effects
         for (int i = 0; i < gridSize; i++) {
             for (int j = 0; j < gridSize; j++) {
-                if (mine.uncoveredCells()[i][j]) { // If the cell has already been uncovered
-                    cells[i][j].setBackground(new Color(0, 100, 0));
+                if (mine.isUncovered(i,j)) { // If the cell has already been uncovered
+                    cells[i][j].setBackground(new Color(0, 100, 0)); // Set color to dark green
+                    cells[i][j].setText(String.valueOf(mine.getAdjMines(i,j))); // Display # of adjacent mines
                 } else {
                     cells[i][j].setBackground(Color.GRAY);
                 }
+                if (mine.gameEnded() && mine.isMine(i,j)) { // Reveal all mines if game has ended
+                    cells[i][j].setBackground(Color.RED);
+                    cells[i][j].setText("💣");
+                }
+                cells[i][j].setForeground(Color.BLACK); // Set text color to black
             }
         }
         // Visually update player location
         cells[playerRow][playerCol].setBackground(Color.BLUE);
+        
         // Set color of the goal cell
-        cells[gridSize - 1][gridSize - 1].setBackground(Color.GREEN);
+        cells[mine.goalPos()[0]][mine.goalPos()[1]].setBackground(Color.GREEN);
     }
 
 }

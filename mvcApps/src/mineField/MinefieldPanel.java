@@ -1,7 +1,7 @@
 package mineField;
 
 import java.awt.*;
-
+import java.awt.event.*;
 import javax.swing.*;
 import mvc.*;
 
@@ -30,109 +30,51 @@ public class MinefieldPanel extends AppPanel  {
         return panel;
     }
 
+    @Override
+    protected JMenuBar createMenuBar() {
+        JMenuBar result = new JMenuBar();
+        // add file, edit, and help menus
+        JMenu fileMenu =
+                Utilities.makeMenu("File", new String[] {"New Game", "Quit"}, this);
+        result.add(fileMenu);
+
+        JMenu editMenu =
+                Utilities.makeMenu("Edit", factory.getEditCommands(), this);
+        result.add(editMenu);
+
+        JMenu helpMenu =
+                Utilities.makeMenu("Help", new String[] {"About", "Help"}, this);
+        result.add(helpMenu);
+
+        return result;
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent ae) {
+        try {
+            String cmmd = ae.getActionCommand();
+
+            if (cmmd.equals("New Game")) {
+                setModel(factory.makeModel());
+                model.setUnsavedChanges(false);
+            } else if (cmmd.equals("Quit")) {
+                System.exit(0);
+            } else if (cmmd.equals("About")) {
+                Utilities.inform(factory.about());
+            } else if (cmmd.equals("Help")) {
+                Utilities.inform(factory.getHelp());
+            } else {
+                Command command = factory.makeEditCommand(model, cmmd, this);
+                if (command != null) command.execute();
+            }
+        } catch (Exception e) {
+            handleException(e);
+        }
+    }
+
     public static void main(String[] args) {
         AppFactory factory = new MinefieldFactory();
         MinefieldPanel panel = new MinefieldPanel(factory);
         panel.display(); 
     }
-
-
-
-/* added set board - adam
-    public void setBoard(){
-        for (int i = 0; i < 10;i++){
-            for (int j = 0; i < 10; i++){
-                board[i][j] = new Cell();
-            }
-        }
-        MineSet();
-        nearbyMineSet();
-    }
-
-    private void winGame(){
-        JOptionPane.showMessageDialog(this, "Congratulations, You win!!!");
-        System.exit(0);
-    }
-
-    private void revealCell(int i, int j){
-        if(mines[i][j]){
-            loseGame();
-        }else{
-            buttons[i][j].setText(toString(surroundingMines[i][j]));
-            buttons[][].setenabled(false);
-            uncoverCell++;
-            if (uncoveredCells == 90) {
-                winGame();
-            }
-            if (surroundingCells[i][j] == 0) {
-                uncoverSurroundingCells(i,j);
-            }
-        }
-
-
-    }
-
-      private void uncoverSurroundingCells(int i, int j) {
-    if (i > 0 && buttons[i - 1][j].isEnabled()) uncoverCell(i - 1, j);
-    if (i < 9 && buttons[i + 1][j].isEnabled()) uncoverCell(i + 1, j);
-    if (j > 0 && buttons[i][j - 1].isEnabled()) uncoverCell(i, j - 1);
-    if (j < 9 && buttons[i][j + 1].isEnabled()) uncoverCell(i, j + 1);
-    if (i > 0 && j > 0 && buttons[i - 1][j - 1].isEnabled()) uncoverCell(
-      i - 1,
-      j - 1
-    );
-    if (i < 9 && j < 9 && buttons[i + 1][j + 1].isEnabled()) uncoverCell(
-      i + 1,
-      j + 1
-    );
-    if (i > 0 && j < 9 && buttons[i - 1][j + 1].isEnabled()) uncoverCell(
-      i - 1,
-      j + 1
-    );
-    if (i < 9 && j > 0 && buttons[i + 1][j - 1].isEnabled()) uncoverCell(
-      i + 1,
-      j - 1
-    );
-  }
-
-    private void loseGame(){
-        for (int i = 0;  i < 10; i++){
-            for (int j = 0; j < 10; j++){
-                if (mines[i][j]){
-                    buttons[i][j].setText("*")
-                }
-                buttons[i][j].setEnabled(false);
-            }
-
-        }
-        JOptionPane.showMessageDialog(this, "Sorry, You lose...");
-        System.exit(0);
-    }
-
-    private void setAdjacentMines(){
-        for(){
-            for(){}
-        }
-
-    }
-
-    private class CellClickListener implements ActionListener {
-        private int i;
-        private int j;
-
-    public CellClickListener(int i, int j) {
-        this.i = i;
-        this.j = j;
-    }
-
-    public void actionPerformed(ActionEvent e) {
-        uncoverCell(i, j);
-        }
-    }
-
-*/
-
-
-
-
 }
