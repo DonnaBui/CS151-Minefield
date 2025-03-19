@@ -5,6 +5,6 @@ It's based on Minesweeper, but instead of clicking on tiles, you have to move yo
 This project utilizes the MVC framework which consists of Model, View, Command, AppFactory, AppPanel, and other supplementary classes. Our Minefield game utilizes extensions of these classes.
 
 Authors: 
-Donna Bui
-Eda Koker
+Donna Bui,
+Eda Koker,
 Adam Sanchez
