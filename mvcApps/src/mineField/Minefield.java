@@ -6,9 +6,8 @@ import mvc.*;
 public class Minefield extends Model {
     private int playerRow = 0, playerCol = 0; // Starts at the top left corner
     private int gridSize = 10; // By default, it's 10x10, but this can be changed if needed. 
-    // Tested & fully functional with all sizes. 
     // However, window size needs to be increased for text to be visible with higher size numbers.
-    private int[] goalPosition;
+    private int[] goalPosition; // Allows for the position of the goal to be customized. 
     private int[][] adjMines;
     private boolean[][] mines, uncovered;
     private boolean gameEnded = false;
@@ -53,7 +52,18 @@ public class Minefield extends Model {
     public boolean isMine(int row, int col) {
         return mines[row][col];
     }
-    private void setMines() {
+
+    public int getAdjMines(int row, int col) {
+        return adjMines[row][col];
+    }
+
+    public void uncover(int row, int col) {
+        if (!uncovered[row][col]) { 
+            uncovered[row][col] = true;
+        }
+    }
+
+    private void setMines() { // Generate the mines
         Random rand = new Random();  // in a 10x10 grid, there will be 10 mines
         int mineCount = gridSize; // 15x15, 15 mines. 20x20, 20 mines.
         int placedMines = 0;
@@ -90,15 +100,6 @@ public class Minefield extends Model {
         }
     }
 
-    public int getAdjMines(int row, int col) {
-        return adjMines[row][col];
-    }
-
-    public void uncover(int row, int col) {
-        if (!uncovered[row][col]) { 
-            uncovered[row][col] = true;
-        }
-    }
     public void move(int rowModifier, int colModifier) {
         int newRow = getPlayerRow() + rowModifier;
         int newCol = getPlayerCol() + colModifier;
@@ -110,7 +111,7 @@ public class Minefield extends Model {
             changed(); // Reveals all mines once game has ended
             throw new IllegalArgumentException("Oh no! You stepped on a mine. Game over :(");
         }
-        else if (newRow == gridSize - 1 && newCol == gridSize - 1) {
+        else if (newRow == goalPos()[0] && newCol == goalPos()[1]) {
             gameEnded = true;
             changed(); 
             throw new IllegalArgumentException("You successfully reached the goal! You win :)");

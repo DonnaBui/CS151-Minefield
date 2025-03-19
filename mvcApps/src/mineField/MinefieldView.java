@@ -63,7 +63,6 @@ public class MinefieldView extends View {
                     cells[i][j].setBackground(Color.RED);
                     cells[i][j].setText("💣");
                 }
-                cells[i][j].setForeground(Color.BLACK); // Set text color to black
             }
         }
         // Visually update player location
