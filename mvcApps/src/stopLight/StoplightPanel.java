@@ -2,7 +2,6 @@ package stopLight;
 
 import java.awt.*;
 import javax.swing.*;
-
 import mvc.*;
 
 public class StoplightPanel extends AppPanel {
