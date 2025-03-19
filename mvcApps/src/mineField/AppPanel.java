@@ -53,9 +53,10 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
         p.add(south);
         p.add(west);
         p.add(east);
-        p.add(clear);
-        p.add(pen);
-        p.add(colour);
+        p.add(southwest);
+        p.add(southeast);
+        p.add(northeast);
+        p.add(northwest);
         controls.add(p);
         controls.setLayout((new GridLayout(2,3)));
     }
@@ -65,9 +66,10 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
         south.addActionListener(this::actionPerformed);
         west.addActionListener(this::actionPerformed);
         east.addActionListener(this::actionPerformed);
-        clear.addActionListener(this::actionPerformed);
-        pen.addActionListener(this::actionPerformed);
-        colour.addActionListener(this::actionPerformed);
+        southwest.addActionListener(this::actionPerformed);
+        southeast.addActionListener(this::actionPerformed);
+        northeast.addActionListener(this::actionPerformed);
+        northwest.addActionListener(this::actionPerformed);
     }
 
 //added set board - adam

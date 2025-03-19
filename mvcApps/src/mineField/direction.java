@@ -1,5 +1,5 @@
 package mineField;
 
-public enum Direction {
+public enum direction {
     NORTH, SOUTH, EAST, WEST, SOUTHWEST, SOUTHEAST, NORTHEAST, NORTHWEST
 }
