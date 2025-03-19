@@ -1,10 +1,16 @@
 package mineField;
 
+import java.io.Serializable;
+
 import mvc.*;
 
-public class MinefieldFactory implements AppFactory {
+public class MinefieldFactory implements AppFactory, Serializable {
 
-    public Model makeModel() { return new Minefield(); }
+    public Model makeModel() { 
+        Minefield game = new Minefield();
+        game.setFileName("minefield_game"); // Default file name if player clicks Save
+        return game; 
+    }
 
     public View makeView(Model m) {
         return new MinefieldView((Minefield)m);
