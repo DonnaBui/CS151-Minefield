@@ -44,7 +44,7 @@ public class MineFieldView extends JPanel {
         int cellHeight = getHeight() / model.getGrid().length;
         g.fillRect(playerCol * cellWidth, playerRow * cellHeight, cellWidth, cellHeight);
     }
-}
+
 
     public void setModel(Model model) {
         this.model = model;

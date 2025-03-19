@@ -14,6 +14,15 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
     protected JPanel controlPanel;
     private JFrame frame;
 
+    JButton north = new JButton("North");
+    JButton south = new JButton("South");
+    JButton west = new JButton("West");
+    JButton east = new JButton("East");
+    JButton southwest = new JButton("southwest");
+    JButton southeast = new JButton("southeast");
+    JButton northeast = new JButton("northeast");
+    JButton northwest = new JButton("northwest");
+
     public static int FRAME_WIDTH = 500;
     public static int FRAME_HEIGHT = 300;
 
@@ -37,6 +46,30 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
         frame.setSize(FRAME_WIDTH, FRAME_HEIGHT);
 
     }
+
+    private void ButtonLayout(JPanel p, JPanel controls){
+       
+        p.add(north);
+        p.add(south);
+        p.add(west);
+        p.add(east);
+        p.add(clear);
+        p.add(pen);
+        p.add(colour);
+        controls.add(p);
+        controls.setLayout((new GridLayout(2,3)));
+    }
+    
+    public void setListeners() {
+        north.addActionListener(this::actionPerformed);
+        south.addActionListener(this::actionPerformed);
+        west.addActionListener(this::actionPerformed);
+        east.addActionListener(this::actionPerformed);
+        clear.addActionListener(this::actionPerformed);
+        pen.addActionListener(this::actionPerformed);
+        colour.addActionListener(this::actionPerformed);
+    }
+
 //added set board - adam
     public void setBoard(){
         for (int i = 0; i < 10;i++){
@@ -45,7 +78,7 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
             }
         }
         MineSet();
-        nearbyMineSet();
+        setAdjacentMines();
     }
 //addded MineSet adam
     private void MineSet(){
@@ -71,7 +104,7 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
             loseGame();
         }else{
             buttons[i][j].setText(toString.toString(surroundingMines[i][j]));
-            buttons[][].setenabled(false);
+            buttons[i][j].setenabled(false);
             uncoverCell++;
             if (uncoveredCells == 90) {
                 winGame();
@@ -84,34 +117,24 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
 
     }
 
-      private void uncoverSurroundingCells(int i, int j) {
-    if (i > 0 && buttons[i - 1][j].isEnabled()) uncoverCell(i - 1, j);
-    if (i < 9 && buttons[i + 1][j].isEnabled()) uncoverCell(i + 1, j);
-    if (j > 0 && buttons[i][j - 1].isEnabled()) uncoverCell(i, j - 1);
-    if (j < 9 && buttons[i][j + 1].isEnabled()) uncoverCell(i, j + 1);
-    if (i > 0 && j > 0 && buttons[i - 1][j - 1].isEnabled()) uncoverCell(
-      i - 1,
-      j - 1
-    );
-    if (i < 9 && j < 9 && buttons[i + 1][j + 1].isEnabled()) uncoverCell(
-      i + 1,
-      j + 1
-    );
-    if (i > 0 && j < 9 && buttons[i - 1][j + 1].isEnabled()) uncoverCell(
-      i - 1,
-      j + 1
-    );
-    if (i < 9 && j > 0 && buttons[i + 1][j - 1].isEnabled()) uncoverCell(
-      i + 1,
-      j - 1
-    );
-  }
+    private void uncoverSurroundingCells(int i, int j) {
+        for (int x = -1; x <= 1; x++) {
+            for (int y = -1; y <= 1; y++) {
+                if (x == 0 && y == 0) continue; // Skip the cell itself
+                int ni = i + x;
+                int nj = j + y;
+                if (ni >= 0 && ni < SIZE && nj >= 0 && nj < SIZE && buttons[ni][nj].isEnabled()) {
+                    uncoverCell(ni, nj);
+                }
+            }
+        }
+    }
 
     private void loseGame(){
         for (int i = 0;  i < 10; i++){
             for (int j = 0; j < 10; j++){
                 if (mines[i][j]){
-                    buttons[i][j].setText("*")
+                    buttons[i][j].setText("*");
                 }
                 buttons[i][j].setEnabled(false);
             }
@@ -121,11 +144,26 @@ public class AppPanel extends JPanel implements Subscriber, ActionListener  {
         System.exit(0);
     }
 
-    private void setAdjacentMines(){
-        for(){
-            for(){}
+    private void setAdjacentMines() {
+        for (int i = 0; i < SIZE; i++) {
+            for (int j = 0; j < SIZE; j++) {
+                if (mines[i][j]) {
+                    continue; // Skip mines
+                }
+                int count = 0;
+                for (int x = -1; x <= 1; x++) {
+                    for (int y = -1; y <= 1; y++) {
+                        if (x == 0 && y == 0) continue; // Skip the cell itself
+                        int ni = i + x;
+                        int nj = j + y;
+                        if (ni >= 0 && ni < SIZE && nj >= 0 && nj < SIZE && mines[ni][nj]) {
+                            count++;
+                        }
+                    }
+                }
+                surroundingMines[i][j] = count; // Set the count of surrounding mines
+            }
         }
-
     }
 
     private class CellClickListener implements ActionListener {
