@@ -16,7 +16,7 @@ public class MoveCommand extends Command{
         Minefield mine = (Minefield)model;
         try {
             // Pass the row/column modifiers as parameters to the move() function in Minefield.java
-            mine.move(direction.getRowDir(), direction.getColDir());
+            mine.move(direction);
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
         }

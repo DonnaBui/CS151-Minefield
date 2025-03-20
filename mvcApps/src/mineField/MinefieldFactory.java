@@ -16,29 +16,31 @@ public class MinefieldFactory implements AppFactory, Serializable {
         return new MinefieldView((Minefield)m);
     }
 
-    public String[] getEditCommands() { return new String[] {"NW", "N", "NE", "W", "E", "SW", "S", "SE"}; }
+    public String[] getEditCommands() { 
+        return new String[] {"↖", "↑", "↗", "←", "→", "↙", "↓", "↘"}; 
+    }
 
     public Command makeEditCommand(Model model, String type, Object source) {
         Minefield mine = (Minefield) model;
         switch (type) {
-            case "NW":
+            case "↖":
                 return new MoveCommand(mine, Direction.NW);
-            case "N":
+            case "↑":
                 return new MoveCommand(mine, Direction.N);
-            case "NE":
+            case "↗":
                 return new MoveCommand(mine, Direction.NE);
-            case "W":
+            case "←":
                 return new MoveCommand(mine, Direction.W);
-            case "E":
+            case "→":
                 return new MoveCommand(mine, Direction.E);
-            case "SW":
+            case "↙":
                 return new MoveCommand(mine, Direction.SW);
-            case "S":
+            case "↓":
                 return new MoveCommand(mine, Direction.S);
-            case "SE":
+            case "↘":
                 return new MoveCommand(mine, Direction.SE);
             default:
-                return null; // Invalid command
+                return null; // Nonexistent command
         }
     }
 
@@ -46,7 +48,7 @@ public class MinefieldFactory implements AppFactory, Serializable {
 
     public String[] getHelp() {
         return new String[] {
-            "Click on the directional buttons to traverse the field." + 
+            "Click on the directional buttons to traverse the field.\n" + 
             "Get to the green box without stepping on any mines!"
         };
     }

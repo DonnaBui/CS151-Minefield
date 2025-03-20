@@ -100,9 +100,9 @@ public class Minefield extends Model {
         }
     }
 
-    public void move(int rowModifier, int colModifier) {
-        int newRow = getPlayerRow() + rowModifier;
-        int newCol = getPlayerCol() + colModifier;
+    public void move(Direction direction) {
+        int newRow = getPlayerRow() + direction.getRowDir();
+        int newCol = getPlayerCol() + direction.getColDir();
         
         if (gameEnded == true) throw new IllegalArgumentException("The game has ended. Please start a new game to continue.");
         else if (!inBounds(newRow, newCol)) throw new IllegalArgumentException("Out of bounds! Please choose a different direction.");
